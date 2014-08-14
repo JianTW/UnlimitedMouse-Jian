@@ -39,9 +39,9 @@ namespace UnlimitedMouse
             lblMsg.Text = System.Windows.Forms.Cursor.Position.X + ", " + System.Windows.Forms.Cursor.Position.Y;
 
             if (X < LeftThreshold)
-                System.Windows.Forms.Cursor.Position = new Point(RightThreshold);
+                System.Windows.Forms.Cursor.Position = new Point(RightThreshold,Y);
             else if (X > RightThreshold)
-                System.Windows.Forms.Cursor.Position = new Point(LeftThreshold);
+                System.Windows.Forms.Cursor.Position = new Point(LeftThreshold,Y);
             
             if (!miLoopVertically.Checked)
                 return;
