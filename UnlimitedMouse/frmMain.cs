@@ -19,10 +19,14 @@ namespace UnlimitedMouse
         public frmMain()
         {
             InitializeComponent();
-            //foreach (Screen screen in Screen.AllScreens)
-            //    TotalWidth += screen.Bounds.Width;
-            LeftThreshold = Screen.AllScreens[0].Bounds.X + Threshold;
-            RightThreshold = Screen.AllScreens[Screen.AllScreens.Length - 1].Bounds.Right - Threshold;
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                if (LeftThreshold > screen.Bounds.X + Threshold)
+                    LeftThreshold = screen.Bounds.X + Threshold;
+
+                if (RightThreshold < screen.Bounds.Right - Threshold)
+                    RightThreshold = screen.Bounds.Right - Threshold;
+            }
 
             TotalHeight = Screen.PrimaryScreen.Bounds.Height;
             niMain.Icon = this.Icon;
@@ -37,12 +41,15 @@ namespace UnlimitedMouse
             int X = System.Windows.Forms.Cursor.Position.X;
             int Y = System.Windows.Forms.Cursor.Position.Y;
             lblMsg.Text = System.Windows.Forms.Cursor.Position.X + ", " + System.Windows.Forms.Cursor.Position.Y;
+#if DEBUG
+            return;
+#endif
 
             if (X < LeftThreshold)
-                System.Windows.Forms.Cursor.Position = new Point(RightThreshold,Y);
+                System.Windows.Forms.Cursor.Position = new Point(RightThreshold, Y);
             else if (X > RightThreshold)
-                System.Windows.Forms.Cursor.Position = new Point(LeftThreshold,Y);
-            
+                System.Windows.Forms.Cursor.Position = new Point(LeftThreshold, Y);
+
             if (!miLoopVertically.Checked)
                 return;
 
@@ -50,7 +57,7 @@ namespace UnlimitedMouse
                 System.Windows.Forms.Cursor.Position = new Point(X, TotalHeight - Threshold);
             else if (Y > TotalHeight - Threshold)
                 System.Windows.Forms.Cursor.Position = new Point(X, Threshold);
-            
+
         }
 
         private void frmMain_Load(object sender, EventArgs e)
