@@ -15,7 +15,7 @@ namespace UnlimitedMouse
         private int TotalHeight = 0;
 
         //如果滑鼠落在左右邊界的話，就要交換
-        private int LeftThreshold, RightThreshold;
+        private int LeftThreshold = int.MaxValue, RightThreshold = int.MinValue;
         public frmMain()
         {
             InitializeComponent();
